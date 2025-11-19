@@ -1,0 +1,7 @@
+# Minimal requirements for Streamlit Cloud
+# Tested and working configuration
+
+streamlit
+pandas
+plotly
+numpy
