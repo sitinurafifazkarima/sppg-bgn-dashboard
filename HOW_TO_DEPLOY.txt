@@ -1,0 +1,38 @@
+# CARA DEPLOY DASHBOARD - SUPER SIMPLE! 🚀
+
+## 3 Langkah Saja!
+
+### 1️⃣ COMMIT KE GIT
+```powershell
+git commit -m "Dashboard SPPG BGN siap deploy"
+```
+
+### 2️⃣ UPLOAD KE GITHUB
+1. Buka: https://github.com/new
+2. Nama: `sppg-bgn-dashboard`
+3. Pilih: **Public**
+4. Klik: **Create repository**
+5. Jalankan command yang muncul (ganti YOUR_USERNAME):
+```powershell
+git remote add origin https://github.com/YOUR_USERNAME/sppg-bgn-dashboard.git
+git branch -M main
+git push -u origin main
+```
+
+### 3️⃣ DEPLOY KE STREAMLIT
+1. Buka: https://share.streamlit.io
+2. Login dengan GitHub
+3. Klik: **New app**
+4. Pilih repository: `sppg-bgn-dashboard`
+5. Main file: `dashboard_sppg.py`
+6. Klik: **Deploy!**
+
+## ✅ SELESAI!
+Dashboard akan online dalam 2-5 menit di:
+`https://your-app-name.streamlit.app`
+
+---
+
+**GRATIS, MUDAH, CEPAT!**
+
+Need help? Baca `DEPLOYMENT_GUIDE.md`
