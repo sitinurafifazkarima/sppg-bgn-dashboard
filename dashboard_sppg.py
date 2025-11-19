@@ -42,17 +42,20 @@ st.markdown("""
 @st.cache_data
 def load_data():
     try:
-        # Try different possible paths
+        # Try different possible paths - prefer cleaned version
         possible_paths = [
-            'sppg_data_complete_with_coordinates.csv',
-            './sppg_data_complete_with_coordinates.csv',
-            'data/sppg_data_complete_with_coordinates.csv'
+            'sppg_data_valid_coordinates.csv',  # Cleaned version (preferred)
+            'sppg_data_complete_with_coordinates.csv',  # Fallback
+            './sppg_data_valid_coordinates.csv',
+            './sppg_data_complete_with_coordinates.csv'
         ]
         
         df = None
+        loaded_file = None
         for path in possible_paths:
             try:
                 df = pd.read_csv(path)
+                loaded_file = path
                 break
             except FileNotFoundError:
                 continue
@@ -60,13 +63,21 @@ def load_data():
         if df is None:
             raise FileNotFoundError("CSV file not found in any expected location")
         
-        # Clean data
+        # Clean data - remove any remaining invalid coordinates
         df = df.dropna(subset=['Latitude', 'Longitude'])
+        
+        # Validate coordinate ranges for Indonesia
+        df = df[(df['Latitude'] >= -11) & (df['Latitude'] <= 6)]
+        df = df[(df['Longitude'] >= 95) & (df['Longitude'] <= 141)]
+        
+        # Show info about loaded data
+        if 'valid' in loaded_file:
+            st.sidebar.success(f"✅ Data loaded: {len(df):,} SPPG (cleaned)")
         
         return df
     except Exception as e:
         st.error(f"Error loading data: {str(e)}")
-        st.info("Please ensure 'sppg_data_complete_with_coordinates.csv' is in the repository")
+        st.info("Please ensure CSV file is in the repository")
         st.stop()
 
 # Function to create hierarchical zones
