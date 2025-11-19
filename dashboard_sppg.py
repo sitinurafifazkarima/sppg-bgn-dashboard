@@ -41,10 +41,33 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('sppg_data_complete_with_coordinates.csv')
-    # Clean data
-    df = df.dropna(subset=['Latitude', 'Longitude'])
-    return df
+    try:
+        # Try different possible paths
+        possible_paths = [
+            'sppg_data_complete_with_coordinates.csv',
+            './sppg_data_complete_with_coordinates.csv',
+            'data/sppg_data_complete_with_coordinates.csv'
+        ]
+        
+        df = None
+        for path in possible_paths:
+            try:
+                df = pd.read_csv(path)
+                break
+            except FileNotFoundError:
+                continue
+        
+        if df is None:
+            raise FileNotFoundError("CSV file not found in any expected location")
+        
+        # Clean data
+        df = df.dropna(subset=['Latitude', 'Longitude'])
+        
+        return df
+    except Exception as e:
+        st.error(f"Error loading data: {str(e)}")
+        st.info("Please ensure 'sppg_data_complete_with_coordinates.csv' is in the repository")
+        st.stop()
 
 # Function to create hierarchical zones
 def create_zones(df):
