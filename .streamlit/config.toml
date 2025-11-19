@@ -1,17 +1,12 @@
-# Streamlit Configuration
-[general]
-email = ""
+# Streamlit Configuration for Streamlit Cloud
 
 [server]
 headless = true
-port = 8080
-enableCORS = false
-enableXsrfProtection = true
+port = 8501
 maxUploadSize = 200
 
 [browser]
 gatherUsageStats = false
-serverAddress = "0.0.0.0"
 
 [theme]
 primaryColor = "#1f77b4"
@@ -19,6 +14,3 @@ backgroundColor = "#ffffff"
 secondaryBackgroundColor = "#f0f2f6"
 textColor = "#262730"
 font = "sans serif"
-
-[client]
-showErrorDetails = true
